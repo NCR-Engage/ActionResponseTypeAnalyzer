@@ -5,7 +5,7 @@ using TestHelper;
 namespace NCR.Engage.RoslynAnalysis.Test
 {
     [TestClass]
-    class ControllerActionMethodDetection : CodeFixVerifier
+    public class ControllerActionMethodDetection : CodeFixVerifier
     {
         [TestMethod]
         public void NonPublicMethodsAreNotActionMethods()

@@ -81,7 +81,7 @@ namespace WebApp
 
             var expected1 = new DiagnosticResult
             {
-                Id = "ActionResponseTypeAnalyzerTypeMismatchIssue",
+                Id = "ARTA001",
                 Message = "Declared response type is 'int', but the actual response type is 'double'.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -115,7 +115,7 @@ namespace WebApp
 
             var expected1 = new DiagnosticResult
             {
-                Id = "ActionResponseTypeAnalyzerTypeMismatchIssue",
+                Id = "ARTA001",
                 Message = "Declared response type is 'List<int>', but the actual response type is 'double'.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -147,7 +147,7 @@ namespace WebApp
 
             var expected1 = new DiagnosticResult
             {
-                Id = "ActionResponseTypeAnalyzerAttributeMissingIssue",
+                Id = "ARTA002",
                 Message = "Response type is not specified in the ResponseType attribute.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -158,7 +158,56 @@ namespace WebApp
 
             VerifyCSharpDiagnostic(test, expected1);
         }
-        
+
+        [TestMethod]
+        public void MultipleIssuesAreReported()
+        {
+            string test = @"
+namespace WebApp
+{
+    using System;
+    using System.Net.Http;
+
+    public class SomeController : System.Web.Http.ApiController
+    {
+        [System.Web.Http.Description.ResponseType(typeof(int))]
+        public System.Net.Http.HttpResponseMessage GetAsync(Guid id)
+        {
+            if (Environment.NewLine == ""ciao"")
+            {
+                return Request.CreateResponse(""allo"");
+            }
+
+            return Request.CreateResponse(5.0);
+        }
+    }
+}";
+
+            var expected0 = new DiagnosticResult
+            {
+                Id = "ARTA001",
+                Message = "Declared response type is 'int', but the actual response type is 'string'.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations =
+                    new[] {
+                            new DiagnosticResultLocation("Test0.cs", 9, 10)
+                }
+            };
+
+            var expected1 = new DiagnosticResult
+            {
+                Id = "ARTA001",
+                Message = "Declared response type is 'int', but the actual response type is 'double'.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations =
+                    new[] {
+                            new DiagnosticResultLocation("Test0.cs", 9, 10)
+                        }
+            };
+
+            VerifyCSharpDiagnostic(test, new [] { expected0, expected1 });
+        }
+
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
             return new ActionResponseTypeAnalyzer();

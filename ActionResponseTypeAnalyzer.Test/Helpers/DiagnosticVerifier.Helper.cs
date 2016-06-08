@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NCR.Engage.RoslynAnalysis;
 
 namespace TestHelper
 {
@@ -50,12 +51,13 @@ namespace TestHelper
         {
             var webApiReference = MetadataReference.CreateFromFile(typeof(System.Net.Http.HttpResponseMessage).Assembly.Location);
             var systemWebReference = MetadataReference.CreateFromFile(typeof(System.Web.Http.Description.ResponseTypeAttribute).Assembly.Location);
-
+            var annotationsReference = MetadataReference.CreateFromFile(typeof(ExceptionalResponseTypeAttribute).Assembly.Location);
+            
             var projects = new HashSet<Project>();
             foreach (var document in documents)
             {
                 var p = document.Project;
-                p = p.AddMetadataReferences(new [] { webApiReference, systemWebReference });
+                p = p.AddMetadataReferences(new [] { webApiReference, systemWebReference, annotationsReference });
                 projects.Add(p);
             }
 

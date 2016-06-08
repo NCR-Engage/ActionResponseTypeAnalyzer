@@ -13,7 +13,7 @@ namespace NCR.Engage.RoslynAnalysis
     public class ActionResponseTypeAnalyzer : DiagnosticAnalyzer
     {
         private static readonly DiagnosticDescriptor TypeMismatchIssue = new DiagnosticDescriptor(
-            "ActionResponseTypeAnalyzerTypeMismatchIssue",
+            "ARTA001",
             "Value type declared in ResponseType should match to actual response type.",
             "Declared response type is '{0}', but the actual response type is '{1}'.",
             "Naming",
@@ -21,7 +21,7 @@ namespace NCR.Engage.RoslynAnalysis
             isEnabledByDefault: true);
 
         private static readonly DiagnosticDescriptor AttributeMissingIssue = new DiagnosticDescriptor(
-            "ActionResponseTypeAnalyzerAttributeMissingIssue",
+            "ARTA002",
             "Public controller method specify their response type in the ResponseType attribute.",
             "Response type is not specified in the ResponseType attribute.",
             "Naming",
@@ -92,6 +92,11 @@ namespace NCR.Engage.RoslynAnalysis
 
             if (declaredType.Name != actualResponseType?.Name)
             {
+                if (IsActualTypeException(actualResponseType))
+                {
+                    return;
+                }
+
                 context.ReportDiagnostic(Diagnostic.Create(
                     TypeMismatchIssue,
                     theAttribute.Item1.GetLocation(),
@@ -145,6 +150,16 @@ namespace NCR.Engage.RoslynAnalysis
             var symbols = typeofDeclaration.ChildNodes().Select(n => semanticModel.GetSymbolInfo(n).Symbol as ITypeSymbol);
 
             return symbols.FirstOrDefault(symbol => symbol != null);
+        }
+
+        private static bool IsActualTypeException(ITypeSymbol type)
+        {
+            if (type == null)
+            {
+                return false;
+            }
+            
+            return type.GetAttributes().Any(att => att.AttributeClass.Name == "ExceptionalResponseTypeAttribute" && att.AttributeClass.ContainingNamespace.ToString() == "NCR.Engage.RoslynAnalysis");
         }
     }
 
