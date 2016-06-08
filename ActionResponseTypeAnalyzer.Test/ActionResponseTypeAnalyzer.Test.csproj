@@ -119,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions.cs" />
     <Compile Include="ControllerActionMethodDetection.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.cs" />
@@ -137,6 +138,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ActionResponseTypeAnalyzer.Annotations\ActionResponseTypeAnalyzer.Annotations.csproj">
+      <Project>{a7d02bd4-10a3-4c7b-a84e-1ad85536c3ed}</Project>
+      <Name>ActionResponseTypeAnalyzer.Annotations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActionResponseTypeAnalyzer\ActionResponseTypeAnalyzer.csproj">
       <Project>{da2a6e0c-5d1d-4154-a986-6929832abbef}</Project>
       <Name>ActionResponseTypeAnalyzer</Name>

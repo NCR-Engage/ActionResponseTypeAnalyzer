@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionResponseTypeAnalyzer.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionResponseTypeAnalyzer.Vsix", "ActionResponseTypeAnalyzer.Vsix\ActionResponseTypeAnalyzer.Vsix.csproj", "{97612347-BBF3-4E84-AE20-B228F5A10B1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionResponseTypeAnalyzer.Annotations", "ActionResponseTypeAnalyzer.Annotations\ActionResponseTypeAnalyzer.Annotations.csproj", "{A7D02BD4-10A3-4C7B-A84E-1AD85536C3ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{97612347-BBF3-4E84-AE20-B228F5A10B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97612347-BBF3-4E84-AE20-B228F5A10B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97612347-BBF3-4E84-AE20-B228F5A10B1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D02BD4-10A3-4C7B-A84E-1AD85536C3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D02BD4-10A3-4C7B-A84E-1AD85536C3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D02BD4-10A3-4C7B-A84E-1AD85536C3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D02BD4-10A3-4C7B-A84E-1AD85536C3ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
