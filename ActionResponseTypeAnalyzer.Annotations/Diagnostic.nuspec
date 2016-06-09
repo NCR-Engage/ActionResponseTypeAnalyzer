@@ -1,21 +1,19 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>ActionResponseTypeAnalyzer</id>
+    <id>ActionResponseTypeAnalyzer.Annotations</id>
     <version>1.0.0.0</version>
-    <title>ActionResponseTypeAnalyzer</title>
+    <title>ActionResponseTypeAnalyzer.Annotations</title>
     <authors>Lukas Lansky</authors>
     <owners>NCR corp.</owners>
     <licenseUrl>https://github.com/NCR-Engage/ActionResponseTypeAnalyzer/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/NCR-Engage/ActionResponseTypeAnalyzer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>ActionResponseTypeAnalyzer</description>
+    <description>ActionResponseTypeAnalyzer requires that all objects returned by a WebApi action method belongs to the documented type. This library contains attribute that can mark exceptions for this rule in your codebase. Typically, you want to mark error class as such exception.</description>
     <copyright>Apache license</copyright>
     <tags>ActionResponseTypeAnalyzer, analyzer</tags>
   </metadata>
-  <!-- The convention for analyzers is to put language agnostic dlls in analyzers\dotnet and language specific analyzers in either analyzers\dotnet\cs or analyzers\dotnet\vb -->
   <files>
-    <file src="*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
-    <file src="tools\*.ps1" target="tools\" />
+    <file src="*.dll" target="lib" />
   </files>
 </package>
