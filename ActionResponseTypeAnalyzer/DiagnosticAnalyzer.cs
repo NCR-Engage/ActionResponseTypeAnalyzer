@@ -54,7 +54,15 @@ namespace NCR.Engage.RoslynAnalysis
             {
                 return;
             }
-            
+
+            // There are extensions for CreateResponse that are
+            // not generic in the System.Net.Http.Formatting.
+            // There is nothing to think about in their case.
+            if (!symbol.IsGenericMethod)
+            {
+                return;
+            }
+
             // The type argument of CreateResponse is the actual response
             // type that may or may not be same as not-yet-discovered
             // declared type.

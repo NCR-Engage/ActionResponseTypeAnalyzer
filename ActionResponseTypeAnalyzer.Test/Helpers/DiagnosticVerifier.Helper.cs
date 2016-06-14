@@ -49,6 +49,8 @@ namespace TestHelper
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
         protected static Diagnostic[] GetSortedDiagnosticsFromDocuments(DiagnosticAnalyzer analyzer, Document[] documents)
         {
+            var statusCodeReference = MetadataReference.CreateFromFile(typeof(System.Net.HttpStatusCode).Assembly.Location);
+            var formatting = MetadataReference.CreateFromFile(typeof(System.Net.Http.Formatting.BsonMediaTypeFormatter).Assembly.Location);
             var webApiReference = MetadataReference.CreateFromFile(typeof(System.Net.Http.HttpResponseMessage).Assembly.Location);
             var systemWebReference = MetadataReference.CreateFromFile(typeof(System.Web.Http.Description.ResponseTypeAttribute).Assembly.Location);
             var annotationsReference = MetadataReference.CreateFromFile(typeof(ExceptionalResponseTypeAttribute).Assembly.Location);
@@ -57,7 +59,7 @@ namespace TestHelper
             foreach (var document in documents)
             {
                 var p = document.Project;
-                p = p.AddMetadataReferences(new [] { webApiReference, systemWebReference, annotationsReference });
+                p = p.AddMetadataReferences(new [] { statusCodeReference, formatting, webApiReference, systemWebReference, annotationsReference });
                 projects.Add(p);
             }
 

@@ -208,6 +208,48 @@ namespace WebApp
             VerifyCSharpDiagnostic(test, new [] { expected0, expected1 });
         }
 
+        [TestMethod]
+        public void NongenericVersionsOfCreateResponseShouldBeIgnored()
+        {
+            string test = @"
+namespace WebApp
+{
+    using System;
+    using System.Net.Http;
+
+    public class SomeController : System.Web.Http.ApiController
+    {
+        public System.Net.Http.HttpResponseMessage GetAsync(Guid id)
+        {
+            return Request.CreateResponse();
+        }
+    }
+}";
+
+            VerifyCSharpDiagnostic(test);
+        }
+
+        [TestMethod]
+        public void NongenericVersionsOfCreateResponseShouldBeIgnoredEvenForStatusCodeCase()
+        {
+            string test = @"
+namespace WebApp
+{
+    using System;
+    using System.Net.Http;
+
+    public class SomeController : System.Web.Http.ApiController
+    {
+        public System.Net.Http.HttpResponseMessage GetAsync(Guid id)
+        {
+            return Request.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+        }
+    }
+}";
+
+            VerifyCSharpDiagnostic(test);
+        }
+
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
             return new ActionResponseTypeAnalyzer();
