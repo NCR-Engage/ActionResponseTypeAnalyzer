@@ -87,6 +87,39 @@ namespace WebApp
             VerifyCSharpDiagnostic(test, expected1);
         }
 
+        [TestMethod]
+        public void MarkedResultsAreExcludedFromReportingEvenForMissingResponseTypeError()
+        {
+            string test = @"
+namespace WebApp
+{
+    using System;
+    using System.Net.Http;
+    using NCR.Engage.RoslynAnalysis;
+
+    public class SomeController : System.Web.Http.ApiController
+    {
+        public System.Net.Http.HttpResponseMessage GetAsync(Guid id)
+        {
+            if (Environment.NewLine == ""\r\n\r"")
+            {
+                return Request.CreateResponse(new ErrorState{ Message = ""An exceptional state arised. Just lettin' you know."" });
+            }
+
+            return Request.CreateResponse(new ErrorState{ Message = ""Some other error."" });
+        }
+    }
+
+    [ExceptionalResponseType]
+    public class ErrorState
+    {
+        public string Message { get; set; }
+    }
+}";
+
+            VerifyCSharpDiagnostic(test);
+        }
+
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
             return new ActionResponseTypeAnalyzer();

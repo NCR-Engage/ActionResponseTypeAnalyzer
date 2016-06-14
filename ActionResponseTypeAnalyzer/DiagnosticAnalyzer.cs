@@ -77,6 +77,11 @@ namespace NCR.Engage.RoslynAnalysis
 
             if (attributesInSemantics.Count != 1)
             {
+                if (IsActualTypeException(actualResponseType))
+                {
+                    return;
+                }
+
                 context.ReportDiagnostic(Diagnostic.Create(AttributeMissingIssue, identifierNameSyntax.GetLocation()));
                 return;
             }
